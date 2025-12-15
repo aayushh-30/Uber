@@ -1,0 +1,8 @@
+PORT = 5000
+
+MONGODB_URL = mongodb://localhost:27017/uberDB
+
+JWT_SECRET = "Your Secret Key"
+
+// For Maps , i have used the open source version of Nominatim and OSRM, without any API key
+// Feel free to use them
