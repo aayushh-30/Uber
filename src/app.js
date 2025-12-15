@@ -16,5 +16,7 @@ app.use('/api/user',require('./routes/user.routes.js'))
 app.use('/api/captain',require('./routes/captain.routes.js'))
 
 app.use('/api/maps',require('./routes/maps.routes.js'))
+app.use('/api/ride',require('./routes/ride.routes.js'))
+
 
 module.exports = app

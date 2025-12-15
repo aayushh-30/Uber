@@ -96,11 +96,23 @@ const getAutoCompleteSuggestionsService = async (input) => {
 
 
 }
+
+const getCaptainRadius = async (lat,lng,radius) => {
+  const captains = await Captain.find({
+    location:{
+      $geoWithin:{
+        $centerSphere: [[lng,lat], radius/6378.1]
+      }
+    }
+  })
+  return captains;
+}
     
 
 module.exports = {
     calculateDistanceTime,
     getAddressCoordinate,
-    getAutoCompleteSuggestionsService
+    getAutoCompleteSuggestionsService,
+    getCaptainRadius
 
 }

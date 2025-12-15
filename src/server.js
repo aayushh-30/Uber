@@ -1,9 +1,11 @@
 const http = require('http');
 const connectDB = require('./config/db.config');
 const app = require('./app');
+const {initSocket} = require('./socket.js');
 
 const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
+initSocket(server)
 connectDB()
 .then(()=>{
     server.listen(PORT, () => {
