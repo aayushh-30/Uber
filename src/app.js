@@ -14,4 +14,7 @@ app.use(cookieParser());
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use('/api/user',require('./routes/user.routes.js'))
 app.use('/api/captain',require('./routes/captain.routes.js'))
+
+app.use('/api/maps',require('./routes/maps.routes.js'))
+
 module.exports = app
