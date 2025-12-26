@@ -62,7 +62,7 @@ const createRideService = async(userID,pickup,destination,vehicleType) => {
         fare:fare[vehicleType],
         vehicleType,
         status:"pending",
-        otp:await getOTP(4)
+        otp:await getOTPService(4)
     });
 
     return newRide

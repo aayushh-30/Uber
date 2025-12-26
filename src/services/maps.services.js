@@ -22,7 +22,7 @@ const getAddressCoordinate = async (address) => {
   };
 };
 
-const calculateDistanceTime = async (source,destination) => {
+const calculateDistanceTime = async (origin,destination) => {
     const geocode = async (place) => {
     const url = "https://nominatim.openstreetmap.org/search";
 
@@ -47,7 +47,7 @@ const calculateDistanceTime = async (source,destination) => {
 
     try {
     // 1. Convert source & destination to coordinates
-    const src = await geocode(source);
+    const src = await geocode(origin);
     const dest = await geocode(destination);
 
     // 2. Call OSRM routing API
@@ -80,15 +80,14 @@ const getAutoCompleteSuggestionsService = async (input) => {
         }
       }
     )
-    
+
     if(response.data.length > 0) {
-        const suggestions = response.data.map(item => {
-          displayName = item.display_name;
-          lat = parseFloat(item.lat);
-          lng = parseFloat(item.lon);
-          
-        })
-        return response.json(suggestions)
+        const suggestions = response.data.map(item => ({
+        displayName: item.display_name,
+        lat: Number(item.lat),
+        lng: Number(item.lon)
+  }));
+      return suggestions;
     }
     else {
         throw new Error("No suggestions found");

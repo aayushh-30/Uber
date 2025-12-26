@@ -10,8 +10,9 @@ const getCoordinates = async(req,res) => {
     const {address} = req.query;
 
     try {
-        
+        console.log(address)
         const coordinates = await getAddressCoordinate(address)
+        res.status(200).json(coordinates)
 
     } catch (error) {
         res.status(404).json({error:"Coordinates not found"})
@@ -28,9 +29,9 @@ const getDistanceTime = async (req,res) => {
             return res.status(400).json({errors: errors.array()})
         }
 
-        const {source,destination} = req.query;
+        const {origin,destination} = req.query;
 
-        const distanceTime = await calculateDistanceTime(source,destination);
+        const distanceTime = await calculateDistanceTime(origin,destination);
 
         res.status(200).json(distanceTime)
         
@@ -52,8 +53,8 @@ const getAutoCompleteSuggestions = async(req,res)=>{
             return res.status(400).json({errors: errors.array()})
         }
 
-        const {address} = req.query;
-        const suggestions = await getAutoCompleteSuggestionsService(address)
+        const { input } = req.query;
+        const suggestions = await getAutoCompleteSuggestionsService(input)
         res.status(200).json(suggestions)
         
     } catch (error) {
