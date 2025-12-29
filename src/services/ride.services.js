@@ -14,8 +14,10 @@ const getFareService = async (pickup, destination) => {
     }
 
     const distanceTime = await calculateDistanceTime(pickup, destination);
-    const distanceInKm = distanceTime.distance / 1000;
+    console.log("Distance and Time:", distanceTime);
 
+    const distanceInKm = Number(distanceTime.distance_km);
+    console.log("Distance in KM:", distanceInKm);
     const baseFare = {
         auto: 100,
         sedan: 200,
@@ -40,6 +42,7 @@ const getFareService = async (pickup, destination) => {
         motorcycle: Math.round(baseFare.motorcycle + distanceInKm * perKmRate.motorcycle)
     };
 
+    console.log(fare);
     return fare;
 };
 
@@ -53,13 +56,13 @@ const getOTPService = async (num) => {
 }
 
 const createRideService = async(userID,pickup,destination,vehicleType) => {
-    const fare = await getFare(pickup, destination);
+    const allFare = await getFareService(pickup, destination);
 
     const newRide = await Ride.create({
         user:userID,
         pickup,
         destination,
-        fare:fare[vehicleType],
+        fare:allFare[vehicleType],
         vehicleType,
         status:"pending",
         otp:await getOTPService(4)

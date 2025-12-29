@@ -2,6 +2,7 @@ const express = require('express')
 const env = require('dotenv')
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 
 const app = express()
 env.config()
@@ -9,6 +10,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 app.use(cookieParser());
+app.use(morgan('dev'));
 
 
 app.get('/', (req, res) => res.send('Hello World!'))

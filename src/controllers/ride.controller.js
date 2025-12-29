@@ -18,9 +18,13 @@ const createRide = async(req,res) => {
             return res.status(400).json({errors:errors.array()})
         }
 
-        const {userID,pickup,destination,vehicleType} = req.body;
+        const {pickup,destination,vehicleType} = req.body;
+        const userID = req.decoded.id;
+        console.log("Data received:", {pickup,destination,vehicleType,userID});
 
         const newRide = await createRideService(userID,pickup,destination,vehicleType);
+
+        console.log("New ride created:", newRide);
 
         //res.status(201).json({message:"Ride created successfully",newRide});
 
@@ -31,7 +35,7 @@ const createRide = async(req,res) => {
 
         newRide.otp = ""
 
-        const rideWithUser = await Ride.findOne({_id:newRide._id}).populate("user");
+        const rideWithUser = await Ride.findOne({_id:newRide._id}).populate("user").select("-password");
 
         captainInRadius.map( captain => {
             sendMessageToSocketId(captain.socketId, {
