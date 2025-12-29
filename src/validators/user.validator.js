@@ -11,7 +11,13 @@ const loginValidator = [
     body("password").isLength({min:6}).withMessage("Password should atleast 6 character length"),
 ]
 
+const previousRidesValidator = [
+    body("page").optional().isInt({min:1}).withMessage("Page must be a positive integer"),
+    body("limit").optional().isInt({min:1}).withMessage("Limit must be a positive integer"),
+]
+
 module.exports = {
     registerValidator,
-    loginValidator
+    loginValidator,
+    previousRidesValidator
 }

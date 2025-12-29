@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const Ride = require('../models/ride.model');
 const createUser = async({firstName,lastName, email, password}) => {
     try {
         const newUser = new User({
@@ -33,7 +34,32 @@ const loginUserServ = async(email, password) => {
     }
 }
 
+const getPreviousRidesServ = async (user, page = 1, limit = 10) => {
+  try {
+    const skip = (page - 1) * limit;
+
+    const rides = await Ride.find({ user })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Ride.countDocuments({ user });
+
+    return {
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      rides
+    };
+
+  } catch (error) {
+    throw new Error('Error fetching previous rides: ' + error.message);
+  }
+};
+
+
 module.exports = {
     createUser,
-    loginUserServ
+    loginUserServ,
+    getPreviousRidesServ
 };

@@ -1,4 +1,4 @@
-const {createCaptain,loginCaptainServ} = require('../services/captain.services.js')
+const {createCaptain,loginCaptainServ, getPreviousRidesServ} = require('../services/captain.services.js')
 const {validationResult} = require('express-validator')
 const Captain = require('../models/captain.model.js');
 
@@ -111,6 +111,23 @@ const logOutCaptain = async(req,res) => {
     }
 }
 
+const getPreviousRides = async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        return res.status(400).json({ errors: error.array() });
+    }
+    try {
+        const { decoded } = req;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const ridesData = await getPreviousRidesServ(decoded.id, page, limit);
+        res.status(200).json(ridesData);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
 const changeCaptainStatus = async(req,res) => {
     try {
         const { decoded } = req;
@@ -132,5 +149,6 @@ module.exports = {
     loginCaptain,
     getProfile,
     logOutCaptain,
-    changeCaptainStatus
+    changeCaptainStatus,
+    getPreviousRides
 };
