@@ -3,6 +3,7 @@ const env = require('dotenv')
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const {getAllRoutes} = require('./controllers/routes.controller.js');
 
 const app = express()
 env.config()
@@ -13,7 +14,7 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', getAllRoutes)
 app.use('/api/user',require('./routes/user.routes.js'))
 app.use('/api/captain',require('./routes/captain.routes.js'))
 

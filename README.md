@@ -55,6 +55,32 @@ Note: All API routes are prefixed with `/api`.
   - **GET /start-ride**: begin ride (OTP flow)
   - **POST /end-ride**: end ride and finalize
 
+**Complete Routes Reference**
+You can also access a JSON format of all routes at the home endpoint:
+- **GET /**: Returns JSON with complete list of all routes, methods, descriptions, and authentication requirements
+
+| Route | Method | Description | Auth Required |
+|-------|--------|-------------|----------------|
+| `/api/user/register` | POST | Register a new user | No |
+| `/api/user/login` | POST | Login user and get authentication token | No |
+| `/api/user/profile` | GET | Get authenticated user's profile information | Yes |
+| `/api/user/logout` | GET | Logout user and invalidate token | Yes |
+| `/api/user/previous-rides` | GET | Get user's previous ride history | Yes |
+| `/api/captain/register` | POST | Register a new captain | No |
+| `/api/captain/login` | POST | Login captain and get authentication token | No |
+| `/api/captain/profile` | GET | Get authenticated captain's profile information | Yes |
+| `/api/captain/logout` | GET | Logout captain and invalidate token | Yes |
+| `/api/captain/previous-rides` | GET | Get captain's previous ride history | Yes |
+| `/api/captain/updateStatus` | PATCH | Update captain's availability status | Yes |
+| `/api/ride/create` | POST | Create a new ride request | Yes |
+| `/api/ride/get-fare` | GET | Get fare estimate for a ride | Yes |
+| `/api/ride/confirm` | POST | Confirm a ride booking | Yes |
+| `/api/ride/start-ride` | GET | Start an accepted ride | Yes |
+| `/api/ride/end-ride` | POST | End an active ride | Yes |
+| `/api/maps/get-coordinates` | GET | Get geographic coordinates for an address | Yes |
+| `/api/maps/get-distance-time` | GET | Get distance and time between two locations | Yes |
+| `/api/maps/get-suggestions` | GET | Get autocomplete suggestions for location search | Yes |
+
 **Socket events**
 - Client -> Server
   - **join**: `{ userId, userType }` register socket for user or captain
